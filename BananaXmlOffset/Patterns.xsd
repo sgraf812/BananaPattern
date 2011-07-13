@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="Patterns">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Pattern" nillable="false"
+                    type="PatternType"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Offset" type="OffsetType"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="PatternType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="Cached" type="CachedType"/>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Pattern" type="PatternString"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="OffsetType">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="Operations" type="OperandType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="BinaryOperatorType">
+        <xsd:sequence>
+            <xsd:element name="Type" type="xsd:string"/>
+            <xsd:element name="Value" type="OperandType"/>
+            <xsd:element name="Target" type="OperandType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="OperatorType">
+        <xsd:complexContent>
+            <xsd:extension base="OperandType">
+                <xsd:attribute name="Type" type="xsd:string" use="required"/>
+                <xsd:attribute name="Value" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="OperandType">
+        <xsd:choice>
+            <xsd:element name="BinaryOperatorResult" type="BinaryOperatorType"/>
+            <xsd:element name="OperatorResult" type="OperatorType"/>
+            <xsd:element name="PatternResult" type="PatternResultType"/>
+            <xsd:element name="ConstantResult" type="xsd:string"/>
+        </xsd:choice>
+    </xsd:complexType>
+    <xsd:complexType name="CachedType">
+        <xsd:attribute name="Build" type="xsd:string"/>
+        <xsd:attribute name="Value" type="UInt32Hex"/>
+    </xsd:complexType>
+    <xsd:complexType name="PatternResultType">
+        <xsd:attribute name="Name" type="xsd:string" use="required"/>
+    </xsd:complexType>
+    <xsd:simpleType name="UInt32Hex">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="8"/>
+            <xsd:pattern value="[\da-fA-F]{0,8}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PatternString">
+        <xsd:list>
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="([\da-fA-F]{1,2}|\?{1,2})"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:list>
+    </xsd:simpleType>
+</xsd:schema>
