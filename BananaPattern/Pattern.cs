@@ -135,12 +135,12 @@ namespace BananaPattern
             var values = _pattern.Select((b, i) =>
             {
                 if (_mask[i])
-                    return Convert.ToString(b, toBase).ToUpper() + seperator;
+                    return Convert.ToString(b, toBase).ToUpper();
                 else
-                    return wildcard + seperator;
+                    return wildcard;
             });
 
-            return string.Concat(values).TrimEnd(' ');
+            return string.Join(seperator, values);
         }
 
         /// <summary>
