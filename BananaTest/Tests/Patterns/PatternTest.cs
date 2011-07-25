@@ -147,6 +147,22 @@ namespace BananaTest.Tests.Patterns
         }
 
         [TestMethod]
+        public unsafe void Find_WildcardsAtBegin_ReturnsMatchingAddressOfFirstWildcard()
+        {
+            Mock<IBotProcessContext> contextMock = SetupContextMock();
+
+            Pattern pattern = Pattern.FromCombinedString("? 24 25");
+            byte[] region = new byte[] { 0x23, 0x25, 0x00, 0x24, 0x25 };
+
+            fixed (byte* r = region)
+            {
+                IntPtr match = pattern.Find((IntPtr)r, (IntPtr)r + region.Length, contextMock.Object);
+
+                Assert.AreEqual((IntPtr)r + 2, match);
+            }
+        }
+
+        [TestMethod]
         public void Find_InContextModule_Succeeds()
         {
 

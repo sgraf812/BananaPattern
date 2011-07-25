@@ -19,8 +19,8 @@ namespace BananaPattern
         public static IPatternAlgorithm DefaultAlgorithm { get; set; }
 
         internal byte[] _pattern;
-
         internal bool[] _mask;
+        private int _trimmedWildcardsOffset;
 
         /// <summary>
         /// Initializes the static part of the Pattern class.
@@ -60,6 +60,7 @@ namespace BananaPattern
                 int last = _mask.FindLast(b => b);
 
                 TrimPatternAndMask(first, last);
+                _trimmedWildcardsOffset = first;
             }
 
             Debug.Assert(_pattern.Length == _mask.Length, "Pattern and mask have to be of the same length.");
@@ -70,17 +71,8 @@ namespace BananaPattern
             int length = last - first + 1;
             if (length != _mask.Length)
             {
-                byte[] newPattern = new byte[length];
-                bool[] newMask = new bool[length];
-
-                for (int i = 0; i < length; i++)
-                {
-                    newPattern[i] = _pattern[first + i];
-                    newMask[i] = _mask[first + i];
-                }
-
-                _pattern = newPattern;
-                _mask = newMask;
+                _pattern = _pattern.Skip(first).Take(length).ToArray();
+                _mask = _mask.Skip(first).Take(length).ToArray();
             }
         }
 
@@ -94,7 +86,7 @@ namespace BananaPattern
         /// <returns>A prepared Pattern instance.</returns>
         public static Pattern FromCombinedString(string pattern, string seperator = " ", string wildcard = "?", int fromBase = 0x10)
         {
-            Debug.Assert(wildcard.Any(c => !char.IsDigit(c)), 
+            Debug.Assert(wildcard.Any(c => !char.IsDigit(c)),
                 "Wildcards have to contain at least one non digit character.");
 
             string[] values = pattern.Split(new string[] { seperator }, StringSplitOptions.RemoveEmptyEntries);
@@ -250,7 +242,7 @@ namespace BananaPattern
 
         private unsafe IList<IntPtr> FindInProcess(IntPtr begin, IntPtr end, int maxMatchCount, IPatternAlgorithm algorithm)
         {
-            byte* b = (byte*)begin;
+            byte* b = (byte*)begin + _trimmedWildcardsOffset;
             byte* e = (byte*)end;
 
             IList<IntPtr> matches = new List<IntPtr>(maxMatchCount);
@@ -263,6 +255,8 @@ namespace BananaPattern
                 {
                     break;
                 }
+
+                match -= _trimmedWildcardsOffset;
 
                 matches.Add(match);
                 b = (byte*)match + 1;
