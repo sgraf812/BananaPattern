@@ -236,6 +236,27 @@ namespace BananaTest.Tests.XmlOffsets.XmlElements
             patternMock.Verify(x => x.Find(contextMock.Object, null), Times.Never());
         }
 
+        [TestMethod]
+        public void FindCached_CachedUpToDate_ReturnsSameValueAsNotCached()
+        {
+            var info = Process.GetCurrentProcess().MainModule.FileVersionInfo;
+            IntPtr expected = Process.GetCurrentProcess().MainModule.BaseAddress + 0x1337;
+            TestPatternElement element = new TestPatternElement();
+
+            Mock<IBotProcessContext> contextMock = new Mock<IBotProcessContext>();
+            contextMock.TargetProcessIsCurrent();
+            Mock<Pattern> patternMock = new Mock<Pattern>(new byte[0], (bool[])null, false);
+            patternMock.Setup(x => x.Find(contextMock.Object, null)).Returns(expected);
+            element.Pattern = patternMock.Object;
+
+            IntPtr actual1 = element.FindCached(contextMock.Object);
+            IntPtr actual2 = element.FindCached(contextMock.Object);
+
+            Assert.AreEqual(expected, actual1);
+            Assert.AreEqual(expected, actual2);
+            patternMock.Verify(x => x.Find(contextMock.Object, null), Times.Once());
+        }
+
         private class TestPatternElement : PatternElement
         {
             public override Pattern Pattern { get; set; }

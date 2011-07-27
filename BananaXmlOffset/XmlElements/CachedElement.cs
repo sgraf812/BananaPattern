@@ -65,7 +65,7 @@ namespace BananaXmlOffset.XmlElements
 
             if (IsSameVersion(info))
             {
-                result += Value;
+                result = baseAddress + Value;
                 return true;
             }
 
