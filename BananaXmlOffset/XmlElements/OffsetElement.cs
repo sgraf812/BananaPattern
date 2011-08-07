@@ -56,17 +56,17 @@ namespace BananaXmlOffset.XmlElements
             }
         }
 
-        private OperationResult CreateImplicitPatternResult()
+        private PatternResult CreateImplicitPatternResult()
         {
-            var patterns = Element.Parent.Elements("Pattern")
-                .Select(ele => 
-                { 
-                    var result = new ImplicitPatternResult { Name = Name };
-                    result.SetPatternElement(new PatternElement(ele));
-                    return result; 
-                });
+            var patternEle = Element.Parent.Elements("Pattern")
+                .Select(ele => new PatternElement(ele))
+                .FirstOrDefault(ele => ele.Name == Name);
 
-            return patterns.FirstOrDefault(pattern => pattern.Name == Name);
+            if (patternEle == null) return null;
+
+            var result = new ImplicitPatternResult { Name = Name };
+            result.SetPatternElement(patternEle);
+            return result;
         }
 
         public OffsetElement()

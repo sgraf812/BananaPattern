@@ -70,18 +70,34 @@ namespace BananaTest.Tests.XmlOffsets.XmlElements
         }
 
         [TestMethod]
-        public void RootOperation_Get_OperationsElementPresent_ReturnOperationsHierarchy()
+        public void CreateImplicitPatternResult_NoMatchingPattern_ReturnsNull()
         {
-            XElement operations = CreateOperationsXElementWithConstantResult();
-            XElement element = CreateOffsetXElement("OffsetName", operations);
-            XElement root = CreateRootXElement(element);
-            OffsetElement offset = new OffsetElement(element);
+            XElement pat1 = CreatePatternXElement("wrong");
+            XElement pat2 = CreatePatternXElement("wrongToo");
+            XElement element = CreateOffsetXElement("OffsetName");
+            XElement root = CreateRootXElement(pat1, pat2, element);
 
-            var operation = offset.RootOperation;
+            OffsetElement_Accessor accessor = new OffsetElement_Accessor(element);
 
-            var constantResult = operation as ConstantResult;
-            Assert.IsNotNull(constantResult);
-            Assert.AreEqual(0, Convert.ToInt32(constantResult.Value, 0x10));
+            var patternResult = accessor.CreateImplicitPatternResult();
+
+            Assert.IsNull(patternResult);
+        }
+
+        [TestMethod]
+        public void CreateImplicitPatternResult_MultiplePatterns_UsesPatternWithSameName()
+        {
+            XElement pat1 = CreatePatternXElement("wrong");
+            XElement pat2 = CreatePatternXElement("wrongToo");
+            XElement element = CreateOffsetXElement("OffsetName");
+            XElement pattern = CreatePatternXElement("OffsetName");
+            XElement root = CreateRootXElement(pat1, pat2, pattern, element);
+
+            OffsetElement_Accessor accessor = new OffsetElement_Accessor(element);
+
+            var patternResult = accessor.CreateImplicitPatternResult();
+
+            Assert.AreEqual(pattern, patternResult.PatternElement.Element);
         }
 
         [TestMethod]
