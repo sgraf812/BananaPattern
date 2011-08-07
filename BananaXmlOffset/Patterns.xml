@@ -1,86 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Patterns xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="file:/C:/Users/Sebastian/Desktop/Patterns.xsd">
+    xsi:noNamespaceSchemaLocation="Patterns.xsd">
+  <Pattern>
+    <Name>EnumVisibleObjects</Name>
     <Pattern>
-        <Name>EnumVisibleObjects</Name>
-        <Pattern>55 8b ec a1 ? ? ? ? 64 8b 0d ? ? ? ? 53 56 57 8b 3c 81 8b 87 ? ? ? ? 05 ? ? ? ? 8b
-            40 ? a8 ?</Pattern>
+      55 8b ec a1 ? ? ? ? 64 8b 0d ? ? ? ? 53 56 57 8b 3c 81 8b 87 ? ? ? ? 05 ? ? ? ? 8b
+      40 ? a8 ?
     </Pattern>
+  </Pattern>
+  <Pattern>
+    <Name>GetObjectByGuid</Name>
     <Pattern>
-        <Name>GetObjectByGuid</Name>
-        <Pattern>55 8b ec 64 8b 0d ? ? ? ? a1 ? ? ? ? 8b 14 81 8b 8a ? ? ? ? 83 ec ? 85 c9 74 ? 8b
-            45 ? 8b 55 ? 56 8b f0</Pattern>
+      55 8b ec 64 8b 0d ? ? ? ? a1 ? ? ? ? 8b 14 81 8b 8a ? ? ? ? 83 ec ? 85 c9 74 ? 8b
+      45 ? 8b 55 ? 56 8b f0
     </Pattern>
+  </Pattern>
+  <Pattern>
+    <Name>GetLocalPlayerGuid</Name>
     <Pattern>
-        <Name>GetLocalPlayerGuid</Name>
-        <Pattern>64 8b 0d ? ? ? ? a1 ? ? ? ? 8b 14 81 8b 8a ? ? ? ? 85 c9 75 ? 33 c0 33 d2 c3 8b 81
-            ? ? ? ? 8b 91 ? ? ? ? c3</Pattern>
+      64 8b 0d ? ? ? ? a1 ? ? ? ? 8b 14 81 8b 8a ? ? ? ? 85 c9 75 ? 33 c0 33 d2 c3 8b 81
+      ? ? ? ? 8b 91 ? ? ? ? c3
     </Pattern>
+  </Pattern> 
+  <Pattern>
+    <Name>GetObjectName</Name>
     <Pattern>
-        <Name>GetObjectName</Name>
-        <Pattern>dd 5c 24 ? d9 45 ? dd 5c 24 ? d9 45 ? dd 1c 24 50 8b 06 8b 90 ? ? ? ? 51 8b ce ff
-            d2 50 8b 45 ? 50</Pattern>
+      dd 5c 24 ? d9 45 ? dd 5c 24 ? d9 45 ? dd 1c 24 50 8b 06 8b 90 ? ? ? ? 51 8b ce ff
+      d2 50 8b 45 ? 50
     </Pattern>
-    <Pattern>
-        <Name>IsLoading</Name>
-        <Pattern>52 8d 85 ? ? ? ? 50 e8 ? ? ? ? 83 c4 ? 85 c0 8d 4d ? a3 ? ? ? ? 0f 95 c3</Pattern>
-    </Pattern>
-    <Pattern>
-        <Name>GetObjectLocation</Name>
-        <Pattern>85 c0 0f 84 ? ? ? ? 8b 06 8b 50 ? 8d 4d ? 51 8b ce ff d2 d9 45 ? 8b 46 ?</Pattern>
-    </Pattern>
-    <Pattern>
-        <Name>UnitMovementInfo</Name>
-        <Pattern>8b 89 ? ? ? ? 8b 51 ? 8b 45 ? 89 10 8b 51 ? 8b 49</Pattern>
-    </Pattern>
+  </Pattern>
+  <Pattern>
+    <Name>IsLoading</Name>
+    <Pattern>52 8d 85 ? ? ? ? 50 e8 ? ? ? ? 83 c4 ? 85 c0 8d 4d ? a3 ? ? ? ? 0f 95 c3</Pattern>
+  </Pattern>
+  <Pattern>
+    <Name>GetObjectLocation</Name>
+    <Pattern>85 c0 0f 84 ? ? ? ? 8b 06 8b 50 ? 8d 4d ? 51 8b ce ff d2 d9 45 ? 8b 46 ?</Pattern>
+  </Pattern>
+  <Pattern>
+    <Name>UnitGetRawPosition</Name>
+    <Pattern>55 8b ec 8b 89 ? ? ? ? 8b 51 ? 8b 45 ? 89 10 8b 51 ? 8b 49</Pattern>
+  </Pattern>
+  <Pattern>
+    <Name>UnitGetFacing</Name>
+    <Pattern>8B 89 ? ? ? ? D9 41 ? 51 D9 1C 24 E8 6E 50</Pattern>
+  </Pattern>
+  <Pattern>
+    <Name>MovementInfoUpdateFacing</Name>
+    <Pattern>55 8b ec 8b 51 ? 56 8b 71 ? 8b c2 0b c6 74 ? 8b 41 ? 8b 08 8b 40</Pattern>
+  </Pattern>
+  <Pattern>
+    <Name>GxDeviceCallVFuncXX</Name>
+    <Pattern>55 8b ec 8b 55 0c 8b 0d ? ? ? ? 8b 01 8b 80 ? ? ? ? 52 8b 55 08 52</Pattern>
+  </Pattern>
+  <Pattern>
+    <Name>GxDeviceD3dCallVFunc24And31</Name>
+    <Pattern>55 8b ec 83 ec ? 8b 81 ? ? ? ? 53 56 8b 18 57 8b 7d 08 8b 57 ? 8b 77 ? 6a 00</Pattern>
+  </Pattern>
 
-    <Offset>
-        <Name>EnumVisibleObjects</Name>
-    </Offset>
-    <Offset>
-        <Name>GetObjectByGuid</Name>
-    </Offset>
-    <Offset>
-        <Name>GetLocalPlayerGuid</Name>
-    </Offset>
-    <Offset>
-        <Name>GetObjectName</Name>
-        <Operations>
-            <OperatorResult Type="Lea">
-                <OperatorResult Type="Add" Value="16">
-                    <PatternResult Name="GetObjectName"/>
-                </OperatorResult>
+  <Offset>
+    <Name>EnumVisibleObjects</Name>
+  </Offset>
+  <Offset>
+    <Name>GetObjectByGuid</Name>
+  </Offset>
+  <Offset>
+    <Name>GetLocalPlayerGuid</Name>
+  </Offset>
+  <Offset>
+    <Name>GetObjectName</Name>
+    <Operations>
+      <OperatorResult Type="Lea">
+        <OperatorResult Type="Add" Value="16">
+          <PatternResult Name="GetObjectName"/>
+        </OperatorResult>
+      </OperatorResult>
+    </Operations>
+  </Offset>
+  <Offset>
+    <Name>IsLoading</Name>
+    <Operations>
+      <OperatorResult Type="Lea">
+        <OperatorResult Type="Add" Value="16">
+          <PatternResult Name="IsLoading"/>
+        </OperatorResult>
+      </OperatorResult>
+    </Operations>
+  </Offset>
+  <Offset>
+    <Name>GetObjectLocation</Name>
+    <Operations>
+      <OperatorResult Type="Lea" Value="Byte">
+        <OperatorResult Type="Add" Value="C">
+          <PatternResult Name="GetObjectLocation"/>
+        </OperatorResult>
+      </OperatorResult>
+    </Operations>
+  </Offset>
+  <Offset>
+    <Name>UnitMovementInfoOffset</Name>
+    <Operations>
+      <OperatorResult Type="Lea" Value="Dword">
+        <OperatorResult Type="Add" Value="5">
+          <PatternResult Name="UnitGetRawPosition"/>
+        </OperatorResult>
+      </OperatorResult>
+    </Operations>
+  </Offset>
+  <Offset>
+    <Name>MovementInfoPositionOffset</Name>
+    <Operations>
+      <OperatorResult Type="Lea" Value="Byte">
+        <OperatorResult Type="Add" Value="B">
+          <PatternResult Name="UnitGetRawPosition"/>
+        </OperatorResult>
+      </OperatorResult>
+    </Operations>
+  </Offset>
+  <Offset>
+    <Name>MovementInfoFacingOffset</Name>
+    <Operations>
+      <OperatorResult Type="Lea" Value="Byte">
+        <OperatorResult Type="Add" Value="5">
+          <PatternResult Name="MovementInfoUpdateFacing"/>
+        </OperatorResult>
+      </OperatorResult>
+    </Operations>
+  </Offset>
+  <Offset>
+    <Name>MovementInfoTransportGuidOffset</Name>
+    <Operations>
+      <OperatorResult Type="Lea" Value="Byte">
+        <OperatorResult Type="Add" Value="5">
+          <PatternResult Name="MovementInfoUpdateFacing"/>
+        </OperatorResult>
+      </OperatorResult>
+    </Operations>
+  </Offset>
+  <Offset>
+    <Name>GxDeviceOffset</Name>
+    <Operations>
+      <OperatorResult Type="Lea" Value="Pointer">
+        <OperatorResult Type="Add" Value="8">
+          <PatternResult Name="GxDeviceCallVFuncXX" />
+        </OperatorResult>
+      </OperatorResult>
+    </Operations>
+  </Offset>
+  <Offset>
+    <Name>ID3D9DeviceEndScene</Name>
+    <Operations>
+      <OperatorResult Type="Lea" Value="Pointer">
+        <OperatorResult Type="Add" Value="a8">
+          <OperatorResult Type="Lea" Value="Pointer">
+            <OperatorResult Type="Lea" Value="Pointer">
+              <BinaryOperatorResult>
+                <Type>Add</Type>
+                <Value>
+                  <OperatorResult Type="Lea" Value="Dword">
+                    <OperatorResult Type="Add" Value="8">
+                      <PatternResult Name="GxDeviceD3dCallVFunc24And31" />
+                    </OperatorResult>
+                  </OperatorResult>
+                </Value>
+                <Target>
+                  <OperatorResult Type="Lea" Value="Pointer">
+                    <OperatorResult Type="Lea" Value="Pointer">
+                      <OperatorResult Type="Add" Value="8">
+                        <PatternResult Name="GxDeviceCallVFuncXX" />
+                      </OperatorResult>
+                    </OperatorResult>
+                  </OperatorResult>
+                </Target>
+              </BinaryOperatorResult>
             </OperatorResult>
-        </Operations>
-    </Offset>
-    <Offset>
-        <Name>IsLoading</Name>
-        <Operations>
-            <OperatorResult Type="Lea">
-                <OperatorResult Type="Add" Value="16">
-                    <PatternResult Name="IsLoading"/>
-                </OperatorResult>
-            </OperatorResult>
-        </Operations>
-    </Offset>
-    <Offset>
-        <Name>GetObjectLocation</Name>
-        <Operations>
-            <OperatorResult Type="Lea" Value="Byte">
-                <OperatorResult Type="Add" Value="C">
-                    <PatternResult Name="GetObjectLocation"/>
-                </OperatorResult>
-            </OperatorResult>
-        </Operations>
-    </Offset>
-    <Offset>
-        <Name>UnitMovementInfo</Name>
-        <Operations>
-            <OperatorResult Type="Lea">
-                <OperatorResult Type="Add" Value="2">
-                    <PatternResult Name="UnitMovementInfo"/>
-                </OperatorResult>
-            </OperatorResult>
-        </Operations>
-    </Offset>
+          </OperatorResult>
+        </OperatorResult>
+      </OperatorResult>
+    </Operations>
+  </Offset>
 </Patterns>

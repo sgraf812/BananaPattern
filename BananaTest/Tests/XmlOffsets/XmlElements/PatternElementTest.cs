@@ -55,6 +55,15 @@ namespace BananaTest.Tests.XmlOffsets.XmlElements
         }
 
         [TestMethod]
+        public void Pattern_Get_ReplacesLineBreaksWithWhitespaces()
+        {
+            XElement element = CreatePatternXElement("some name", "AA\nBB CC");
+            PatternElement patternEle = new PatternElement(element);
+
+            CollectionAssert.AreEqual(new byte[] { 0xAA, 0xBB, 0xCC }, patternEle.Pattern._pattern);
+        }
+
+        [TestMethod]
         public void Pattern_Set_SetsPatternElement()
         {
             string expected = "AA ? BB";

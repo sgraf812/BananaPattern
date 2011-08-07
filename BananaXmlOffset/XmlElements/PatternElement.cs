@@ -52,7 +52,7 @@ namespace BananaXmlOffset.XmlElements
         {
             get
             {
-                return Pattern.FromCombinedString(GetElementValue("Pattern"));
+                return Pattern.FromCombinedString(GetElementValue("Pattern").Replace('\n', ' '));
             }
             set
             {
