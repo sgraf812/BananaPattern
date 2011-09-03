@@ -43,7 +43,11 @@ namespace BananaXmlOffset.XmlElements
 
         public override string Execute(IBotProcessContext context)
         {
-            return PatternElement.FindCached(context).ToString("X");
+            var element = PatternElement;
+            if (element == null)
+                throw new PatternException("There was no pattern element named \"" + Name + "\".");
+
+            return element.FindCached(context).ToString("X");
         }
     }
 }

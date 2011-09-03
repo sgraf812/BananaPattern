@@ -58,6 +58,21 @@ namespace BananaTest.Tests.XmlOffsets.XmlElements
             Assert.AreEqual(pattern, accessor.PatternElement.Element);
         }
 
+        [ExpectedException(typeof(PatternException))]
+        [TestMethod]
+        public void Execute_NoPatternElement_Throws()
+        {
+            string expected = "Hi!";
+            XElement result = CreatePatternResultXElement(expected);
+            XElement root = new XElement("Patterns",
+                result);
+            XDocument doc = new XDocument(root);
+
+            PatternResult_Accessor accessor = new PatternResult_Accessor(result);
+
+            accessor.Execute(null);
+        }
+
         [TestMethod]
         public void Execute_RegardlessOfContext_CallsFindCachedOnPatternElement()
         {

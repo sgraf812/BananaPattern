@@ -76,33 +76,5 @@ namespace BananaPattern.Algorithms
 
             return IntPtr.Zero;
         }
-
-        //private int[] GetNextTable(byte[] pattern, bool[] mask)
-        //{
-        //    int[] nextTable = new int[pattern.Length + 1];
-
-        //    int length = pattern.Length;
-
-        //    int left = length;
-        //    int right = length + 1;
-
-        //    // initialize empty value
-        //    nextTable[i] = right;
-
-        //    // read from left to right: end when first letter should be checked
-        //    while (left > 0)
-        //    {
-        //        while (j <= length)
-        //        {
-        //            // test if border can be extended
-        //            if (mask[pattern[left - 1]] != pattern[right - 1])
-        //            {
-                        
-        //            }
-        //        }
-        //    }
-
-        //    return nextTable;
-        //}
     }
 }
